@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "StormWorthy"
+version = "0.1.0"
+description = "Perspective-guided, source-grounded research engine with a mandatory claim-level verification gate (a claim-verified STORM variant)."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Rahul Krishna" }]
+keywords = [
+    "research",
+    "llm",
+    "verification",
+    "grounded-generation",
+    "claims",
+    "storm",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Typing :: Typed",
+]
+
+[project.urls]
+Homepage = "https://gitlab.com/krahul02004/StormWorthy"
+Repository = "https://gitlab.com/krahul02004/StormWorthy"
+Issues = "https://gitlab.com/krahul02004/StormWorthy/-/issues"
+Changelog = "https://gitlab.com/krahul02004/StormWorthy/-/blob/main/CHANGELOG.md"
+
+[project.optional-dependencies]
+# the engine itself is dependency-free; extras only power the optional live layer
+anthropic = ["anthropic>=0.40"]
+dev = ["pytest>=8"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+stormworthy = ["py.typed"]
+"stormworthy.examples.design_review" = ["sample_corpus/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

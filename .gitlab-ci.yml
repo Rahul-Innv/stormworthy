@@ -1,0 +1,20 @@
+stages: [test]
+
+# Zero-network test suite on the oldest and newest supported Python.
+.test-template: &test
+  stage: test
+  script:
+    - python -m compileall -q src/stormworthy
+    - pip install -q -e .[dev]
+    - python -m pytest -q
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+
+test:3.10:
+  <<: *test
+  image: python:3.10-slim
+
+test:3.12:
+  <<: *test
+  image: python:3.12-slim

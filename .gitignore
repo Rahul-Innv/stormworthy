@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# Env / secrets — never commit credentials
+.env
+.env.*
+*.key
+*.pem
+
+# Local run artifacts — briefs can embed absolute paths and private corpus content
+live-brief-*.json
+*.ledger.json
+
+# Editor / OS
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store

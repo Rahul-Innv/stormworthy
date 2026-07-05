@@ -1,0 +1,51 @@
+{
+  "subject": {
+    "name": "Acme Analytics dashboard",
+    "description": "A fictional B2B analytics dashboard invented for this example. Not a real product; any resemblance to a real company or product is coincidental."
+  },
+  "docs": [
+    {
+      "path": "subject-acme.md",
+      "channel": "design_system",
+      "title": "Acme Analytics subject brief",
+      "tags": "subject brief product page flow users signup cta fields toolbar targets contrast type states"
+    },
+    {
+      "path": "brand-guide-acme.md",
+      "channel": "design_system",
+      "title": "Acme brand guide",
+      "tags": "brand register voice palette tokens accent type scale hierarchy contrast contract accessibility-first"
+    },
+    {
+      "path": "wcag-quick-reference.md",
+      "channel": "standard",
+      "title": "WCAG 2.2 AA quick reference",
+      "tags": "wcag accessibility contrast 4.5 focus visible target size 24 reflow zoom reduced motion labels criterion"
+    },
+    {
+      "path": "cwv-thresholds.md",
+      "channel": "standard",
+      "title": "Core Web Vitals thresholds",
+      "tags": "performance core web vitals lcp inp cls p75 layout shift reserved dimensions speed"
+    },
+    {
+      "path": "heuristics.md",
+      "channel": "kb",
+      "title": "Usability heuristics reference",
+      "tags": "nielsen norman heuristic affordance signifier feedback hick fitts miller navigation labeling friction flow"
+    },
+    {
+      "path": "trend-notes.md",
+      "channel": "reference",
+      "title": "Dashboard trend notes",
+      "tags": "trends inspiration mood visual dashboard reference"
+    },
+    {
+      "path": "perf-field-data.md",
+      "channel": "kb",
+      "title": "Acme CWV field data",
+      "tags": "performance field data measurements lcp inp cls p75",
+      "note": "This file DELIBERATELY does not exist. fetch() returns None for it, which is how the demo proves silence != absence: the performance lens abstains instead of fabricating."
+    }
+  ]
+}

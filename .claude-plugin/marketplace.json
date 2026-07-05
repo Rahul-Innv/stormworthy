@@ -1,0 +1,12 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "stormworthy",
+  "owner": { "name": "Rahul Krishna" },
+  "plugins": [
+    {
+      "name": "stormworthy",
+      "source": ".",
+      "description": "Claim-verified research dossiers with typed claims, an adversarial refuter, honest abstains, and per-section confidence."
+    }
+  ]
+}

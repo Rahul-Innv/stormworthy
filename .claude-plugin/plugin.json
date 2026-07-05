@@ -1,0 +1,7 @@
+{
+  "name": "stormworthy",
+  "description": "Claim-verified research dossiers: perspective-guided, source-grounded research where every claim passes a verification gate (typed claims, adversarial refuter, honest abstains, per-section confidence). Use for verified research briefs, competitive analysis, literature-grounded reviews, or any 'research X and prove your citations' task.",
+  "author": { "name": "Rahul Krishna" },
+  "homepage": "https://gitlab.com/krahul02004/StormWorthy",
+  "keywords": ["research", "verification", "claims", "citations", "storm", "grounded", "dossier"]
+}
