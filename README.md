@@ -50,15 +50,17 @@ yet benchmarked:
 
 - **Flag-only is the default and the only supported mode.** `strict_drop` (silently removing
   unsupported claims from the shipped body) is a precision claim that must be **earned** on a
-  hand-rated gold set (we use Wilson lower bound ≥ 0.80 on the predicted-unsupported class). It
-  has not been cleared yet; unsupported claims are therefore retained *and flagged*, never
-  silently deleted — and never silently trusted.
+  hand-rated gold set (Wilson lower bound ≥ 0.80 on the predicted-unsupported class). The scoring
+  harness is real and runnable today — [`benchmarks/`](benchmarks/), `python benchmarks/score.py`
+  — but the bar has **not** been cleared on a real gold set yet, so unsupported claims are retained
+  *and flagged*, never silently deleted, and never silently trusted.
 - The full pipeline is proven **offline** by deterministic-stub proofs and a fake-client
   live-shape suite (this repo's tests; no network, no spend). **Live** validation so far is
   small-scale smoke runs.
 - Claim-level verification is genuinely hard (human experts score ~61% one-shot in recent
-  benchmarks). A benchmark score (e.g. DeepFact-Bench) is on the roadmap and will be published
-  when it exists — until then, treat verdicts as a strong prior, not ground truth.
+  benchmarks). The [`benchmarks/`](benchmarks/) harness scores the real gate against a gold set and
+  reports Wilson-bounded precision per class; a headline number will be published once a real
+  hand-rated gold set is populated. Until then, treat verdicts as a strong prior, not ground truth.
 - Known limitation: with `k_runs ≥ 2`, the default (lexical) recurrence matcher under-recurs on
   live LLMs that reword findings between runs — use `k_runs=1`, lower the `quorum`, or inject a
   semantic recurrence key (`self_consistency(key=...)` is injectable for exactly this).
@@ -131,11 +133,24 @@ demo:
 python -m stormworthy.examples.design_review --demo
 ```
 
-One run shows every gate behavior on a fictional subject: a supported finding ships vetted at
-1.0, the refuter's supported bear-case marks a lens contested at the 0.1 floor, an
-over-association leap is structurally flagged (and dropped under `--strict-drop`), an unsurfaced
-prose leap is caught by the anti-evasion guard, and the lens whose only source doesn't exist
-abstains with confidence `None`.
+One run, every gate behavior on a fictional subject — this is the actual, unedited output:
+
+```text
+lens                         status                    conf  flags
+accessibility                filled                    1.00           # cited + entailed -> ships vetted at 1.0
+responsive                   filled                    1.00           # WCAG SC 2.5.8 target-size finding, verified
+information_architecture     filled                    1.00
+conversion_ux                filled                    1.00  1 flagged # over-association leap: no supports:"link" cite -> unsupported, retained + flagged
+visual_brand                 filled                    0.10  CONTESTED # refuter's SUPPORTED bear-case hard-floors the lens
+performance                  insufficient_evidence     None            # its one source doesn't fetch -> abstain, not a guess
+evasions caught: 2                                                     # a prose leap never surfaced as a claim, caught per run
+```
+
+Each row is a distinct honesty rule firing: a supported finding ships **vetted at 1.0**; the
+refuter's supported bear-case marks a lens **contested at the 0.1 floor** (never averaged away);
+the over-association leap is **structurally flagged** (and dropped under `--strict-drop`); an
+unsurfaced prose leap is **caught by the anti-evasion guard**; and the lens whose only source
+doesn't exist **abstains at confidence `None`** — silence, not a fabricated answer.
 
 Honest framing: the rubrics are real, but the sample corpus is illustrative original prose and
 the subject is **fictional** — the demo proves the verification *mechanism*; it is not a
