@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/assets/logo.png" alt="StormWorthy logo" width="180">
+</p>
+
 # StormWorthy
 
 [![pipeline status](https://gitlab.com/krahul02004/StormWorthy/badges/main/pipeline.svg)](https://gitlab.com/krahul02004/StormWorthy/-/commits/main)
