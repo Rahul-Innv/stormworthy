@@ -4,7 +4,9 @@
 
 # StormWorthy
 
-[![pipeline status](https://gitlab.com/krahul02004/StormWorthy/badges/main/pipeline.svg)](https://gitlab.com/krahul02004/StormWorthy/-/commits/main)
+[![pipeline status](https://gitlab.com/krahul02004/stormworthy/badges/main/pipeline.svg)](https://gitlab.com/krahul02004/stormworthy/-/commits/main)
+[![PyPI version](https://img.shields.io/pypi/v/stormworthy)](https://pypi.org/project/stormworthy/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 **A perspective-guided, source-grounded research engine with a mandatory claim-level verification gate.**
 
@@ -71,9 +73,16 @@ yet benchmarked:
 
 ## Install
 
+From PyPI:
+
 ```bash
-pip install -e .            # engine + stubs, zero runtime deps
-pip install -e .[anthropic] # + the reference live LLM layer
+pip install stormworthy               # engine + stubs, zero runtime deps
+pip install "stormworthy[anthropic]"  # + the reference live LLM layer
+```
+
+Or editable from a clone:
+
+```bash
 pip install -e .[dev]       # + pytest
 ```
 
@@ -137,13 +146,15 @@ demo:
 python -m stormworthy.examples.design_review --demo
 ```
 
-One run, every gate behavior on a fictional subject — this is the actual, unedited output:
+One run, every gate behavior on a fictional subject — real output from a run of this demo
+(annotations added; row order varies between runs):
 
 ```text
 lens                         status                    conf  flags
 accessibility                filled                    1.00           # cited + entailed -> ships vetted at 1.0
 responsive                   filled                    1.00           # WCAG SC 2.5.8 target-size finding, verified
 information_architecture     filled                    1.00
+subject                      filled                    1.00           # the pinned basic-fact baseline
 conversion_ux                filled                    1.00  1 flagged # over-association leap: no supports:"link" cite -> unsupported, retained + flagged
 visual_brand                 filled                    0.10  CONTESTED # refuter's SUPPORTED bear-case hard-floors the lens
 performance                  insufficient_evidence     None            # its one source doesn't fetch -> abstain, not a guess
@@ -168,7 +179,7 @@ wires the pipeline for you and consumes the dossier honestly (supported findings
 contested sections surfaced, abstains carrying no weight). In Claude Code:
 
 ```
-/plugin marketplace add https://gitlab.com/krahul02004/StormWorthy.git
+/plugin marketplace add https://gitlab.com/krahul02004/stormworthy.git
 /plugin install stormworthy@stormworthy
 ```
 
