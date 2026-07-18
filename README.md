@@ -23,6 +23,12 @@ It is a native re-implementation of the research method behind Stanford's
 writer↔expert conversations), plus the layer that method lacks: **verification inside the writer,
 not after it**.
 
+## Getting started
+
+- **Prerequisites:** Python 3.10 or newer. The engine is standard library only, with zero runtime dependencies.
+- **Install:** `pip install stormworthy` (engine plus stubs). See [Install](#install) for the editable-from-clone setup and the optional live LLM extra.
+- **Check it works:** run `python -m stormworthy.examples.design_review --demo`. It runs the bundled offline design-review demo (no API key, no network) and prints a per-lens verification table that ends with `evasions caught: 2`. The full walkthrough is in [A worked example: design review](#a-worked-example-design-review).
+
 ## Why another research agent?
 
 The open research pipelines I surveyed (Stanford STORM, GPT-Researcher, LangChain deep
