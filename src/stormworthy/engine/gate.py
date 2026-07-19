@@ -47,11 +47,21 @@ def score_claims(claims_by_run, gate: VerificationGate, *,
     return scored
 
 
-def assemble_sections(scored_claims, *, strict_drop: bool, min_support: float = 0.5,
+def assemble_sections(scored_claims, *, strict_drop: bool,
+                      expected_lenses: "tuple[str, ...]" = (),
+                      min_support: float = 0.5,
                       contested_floor: float = CONTESTED_FLOOR,
                       headline_chars: int = 90) -> list[Section]:
     sections: list[Section] = []
-    for lens, claims in route_claims(scored_claims).items():
+    routed = route_claims(scored_claims)
+    lens_order = dict.fromkeys((*expected_lenses, *routed))
+    source_perspectives = {claim.perspective_id for claim in scored_claims}
+    for lens in lens_order:
+        # A refuter can emit claims routed only to the constructive lens it
+        # contests. Do not create a duplicate section for that source role.
+        if lens not in routed and lens in source_perspectives:
+            continue
+        claims = routed.get(lens, [])
         constructive = [c for c in claims if c.stance == "constructive"]
         refuting = [c for c in claims if c.stance == "disconfirming"]
         s_plus = [c for c in constructive if _verdict(c) == "supported"]

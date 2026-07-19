@@ -141,9 +141,11 @@ for s in dossier.sections:
 # prints one line per lens (row order varies between runs):
 #   subject filled 1.0
 #   technology filled 1.0
+#   risks insufficient_evidence None
 ```
 
-The refuter found nothing to contest here; see `tests/test_provider.py` for the full end-to-end
+The explicit `risks insufficient_evidence None` row records that the refuter found nothing to
+contest here; see `tests/test_provider.py` for the full end-to-end
 scenario (contestation, abstention, the anti-evasion guard), and `src/stormworthy/llm/` for the
 live Anthropic-backed roles (bring your own `ANTHROPIC_API_KEY`).
 

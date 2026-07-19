@@ -32,6 +32,18 @@ def test_abstain_is_confidence_none_not_zero():
     assert section.vetted is False
 
 
+def test_zero_claim_framework_and_refuter_lenses_abstain_explicitly():
+    sections = assemble_sections(
+        [], strict_drop=False, expected_lenses=("technology", "risks")
+    )
+
+    assert [(section.anchor, section.status) for section in sections] == [
+        ("technology", "insufficient_evidence"),
+        ("risks", "insufficient_evidence"),
+    ]
+    assert all(section.confidence is None for section in sections)
+
+
 def test_supported_refuter_contests_and_hard_floors():
     claims = [_fact("finding", "u1"),
               _fact("bear case", "u2", stance="disconfirming")]

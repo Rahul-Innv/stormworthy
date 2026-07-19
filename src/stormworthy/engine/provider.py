@@ -74,6 +74,7 @@ class ResearchRun:
             evasions.extend(run_evasions)
         scored = score_claims(runs, self.gate)
         sections = assemble_sections(scored, strict_drop=self.strict_drop,
+                                     expected_lenses=tuple(p.id for p in ps.perspectives),
                                      min_support=getattr(self.gate, "min_support", 0.5))
         return Dossier(entity_id=entity_id, sections=sections,
                        conversation_log=log, unused_sources=[], evasions=evasions)

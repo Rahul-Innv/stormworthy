@@ -15,3 +15,4 @@ def test_readme_quickstart_prints_both_filled_lenses(capsys):
     lines = {" ".join(line.split()) for line in capsys.readouterr().out.splitlines()}
     assert "subject filled 1.0" in lines
     assert "technology filled 1.0" in lines
+    assert "risks insufficient_evidence None" in lines
