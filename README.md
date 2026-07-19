@@ -105,9 +105,9 @@ from stormworthy.testing import (StubExpert, StubFramework, StubInterrogator,
                                  StubRetrieval, StubSurfacer, StubVerify)
 
 # 1. Your domain = a FrameworkSpec: framework angles + a basic-fact baseline + a refuter.
-#    Angles use "Family: detail" anchors; same family merges into one analyst.
+#    Angles use "Family — detail" anchors; same family merges into one analyst.
 framework = StubFramework(
-    [Angle(id="a-stack", title="Tech analyst", anchor="Technology: stack",
+    [Angle(id="a-stack", title="Tech analyst", anchor="Technology — stack",
            question="What does Acme run on?", kind="framework", anchor_keys=("technology",))],
     Angle(id="subject", title="Baseline", anchor="Subject", question="What is Acme?",
           kind="basic_fact", anchor_keys=("subject",)),
