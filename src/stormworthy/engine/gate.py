@@ -47,11 +47,27 @@ def score_claims(claims_by_run, gate: VerificationGate, *,
     return scored
 
 
-def assemble_sections(scored_claims, *, strict_drop: bool, min_support: float = 0.5,
+def assemble_sections(scored_claims, *, strict_drop: bool,
+                      expected_lenses: "tuple[str, ...]" = (),
+                      refuter_perspective_ids: "tuple[str, ...]" = (),
+                      min_support: float = 0.5,
                       contested_floor: float = CONTESTED_FLOOR,
                       headline_chars: int = 90) -> list[Section]:
     sections: list[Section] = []
-    for lens, claims in route_claims(scored_claims).items():
+    routed = route_claims(scored_claims)
+    lens_order = dict.fromkeys((*expected_lenses, *routed))
+    active_refuters = set(refuter_perspective_ids) & {
+        claim.perspective_id for claim in scored_claims
+    }
+    for lens in lens_order:
+        # A refuter that emitted a claim routed to the constructive lens it
+        # contests must not also invent a duplicate role-id section. This
+        # suppression is intentionally limited to known refuter roles: a
+        # constructive perspective can own multiple routing keys, and emitting
+        # against one must not hide another expected zero-claim lens.
+        if lens not in routed and lens in active_refuters:
+            continue
+        claims = routed.get(lens, [])
         constructive = [c for c in claims if c.stance == "constructive"]
         refuting = [c for c in claims if c.stance == "disconfirming"]
         s_plus = [c for c in constructive if _verdict(c) == "supported"]

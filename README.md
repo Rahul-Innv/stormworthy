@@ -105,9 +105,9 @@ from stormworthy.testing import (StubExpert, StubFramework, StubInterrogator,
                                  StubRetrieval, StubSurfacer, StubVerify)
 
 # 1. Your domain = a FrameworkSpec: framework angles + a basic-fact baseline + a refuter.
-#    Angles use "Family: detail" anchors; same family merges into one analyst.
+#    Angles use "Family — detail" anchors; same family merges into one analyst.
 framework = StubFramework(
-    [Angle(id="a-stack", title="Tech analyst", anchor="Technology: stack",
+    [Angle(id="a-stack", title="Tech analyst", anchor="Technology — stack",
            question="What does Acme run on?", kind="framework", anchor_keys=("technology",))],
     Angle(id="subject", title="Baseline", anchor="Subject", question="What is Acme?",
           kind="basic_fact", anchor_keys=("subject",)),
@@ -141,9 +141,11 @@ for s in dossier.sections:
 # prints one line per lens (row order varies between runs):
 #   subject filled 1.0
 #   technology filled 1.0
+#   risks insufficient_evidence None
 ```
 
-The refuter found nothing to contest here; see `tests/test_provider.py` for the full end-to-end
+The explicit `risks insufficient_evidence None` row records that the refuter found nothing to
+contest here; see `tests/test_provider.py` for the full end-to-end
 scenario (contestation, abstention, the anti-evasion guard), and `src/stormworthy/llm/` for the
 live Anthropic-backed roles (bring your own `ANTHROPIC_API_KEY`).
 

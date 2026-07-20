@@ -157,3 +157,24 @@ def test_surfacer_received_each_perspectives_stance(dossier_and_surfacer):
     _, surfacer = dossier_and_surfacer
     assert surfacer.stance_seen["risks"] == "disconfirming"
     assert surfacer.stance_seen["technology"] == "constructive"
+
+
+def test_zero_claim_sections_use_anchor_keys_not_perspective_ids():
+    framework = StubFramework(
+        [Angle(id="platform-dimension", title="Platform analyst", anchor="Platform",
+               question="What does Acme run on?", kind="framework",
+               anchor_keys=("technology",))],
+        Angle(id="subject", title="Baseline", anchor="Subject", question="What is Acme?",
+              kind="basic_fact", anchor_keys=("subject",)),
+        Angle(id="breaker", title="Refuter", anchor="Risks", question="What breaks the thesis?",
+              kind="refuter", anchor_keys=("risks",)),
+    )
+    run = ResearchRun(
+        framework, StubRetrieval({}), StubInterrogator({}), StubExpert({}), StubSurfacer(),
+        ClaimGate(StubVerify()), k_runs=1,
+    )
+
+    dossier = run.research("acme")
+
+    assert [section.anchor for section in dossier.sections] == ["subject", "technology", "risks"]
+    assert all(section.status == "insufficient_evidence" for section in dossier.sections)
