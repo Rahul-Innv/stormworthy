@@ -1,4 +1,6 @@
 """Gate orchestration honesty rules: fusion, abstain, contest floor, strict-drop vs flag-only."""
+from dataclasses import replace
+
 from stormworthy.engine import Claim, ClaimGate, assemble_sections, score_claims
 from stormworthy.testing import StubVerify
 
@@ -42,6 +44,24 @@ def test_zero_claim_framework_and_refuter_lenses_abstain_explicitly():
         ("risks", "insufficient_evidence"),
     ]
     assert all(section.confidence is None for section in sections)
+
+
+def test_cross_routed_claim_does_not_hide_an_expected_zero_claim_lens():
+    claim = _fact("Competition is crowded", "market")
+    claim = replace(claim, perspective_id="market", anchor_keys=("competition",))
+    scored = _score([claim], {"market": "supported"})
+
+    sections = assemble_sections(
+        scored,
+        strict_drop=False,
+        expected_lenses=("market", "competition"),
+    )
+
+    assert [(section.anchor, section.status) for section in sections] == [
+        ("market", "insufficient_evidence"),
+        ("competition", "filled"),
+    ]
+    assert sections[0].confidence is None
 
 
 def test_supported_refuter_contests_and_hard_floors():

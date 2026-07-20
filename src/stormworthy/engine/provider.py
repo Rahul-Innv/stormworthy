@@ -82,8 +82,14 @@ class ResearchRun:
             for perspective in ps.perspectives
             for key in (perspective.anchor_keys or (perspective.id,))
         ))
+        refuter_perspective_ids = tuple(
+            perspective.id
+            for perspective in ps.perspectives
+            if perspective.kind == "refuter"
+        )
         sections = assemble_sections(scored, strict_drop=self.strict_drop,
                                      expected_lenses=expected_lenses,
+                                     refuter_perspective_ids=refuter_perspective_ids,
                                      min_support=getattr(self.gate, "min_support", 0.5))
         return Dossier(entity_id=entity_id, sections=sections,
                        conversation_log=log, unused_sources=[], evasions=evasions)
