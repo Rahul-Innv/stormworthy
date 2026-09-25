@@ -240,3 +240,9 @@ verification gate are original to this project.
 ## License
 
 MIT. See [LICENSE](LICENSE).
+
+## Contributors
+
+- [Rahul Krishna](https://github.com/Rahul-Innv) - creator and contributor.
+- Claude Code - AI development assistance.
+- Codex - AI development assistance.
